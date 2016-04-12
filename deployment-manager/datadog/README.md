@@ -16,7 +16,7 @@ To create and deploy the cluster and cluster-type, run the following command
 $ gcloud deployment-manager deployments create cluster --config cluster.yaml
 ```
 
-This will create a Google Container Engine (GKE) cluster and cluster-type deployment. The GKE cluster will be managed by GCP with usernmae/password as the auth.
+This will create a Google Container Engine (GKE) cluster and cluster-type deployment. The GKE cluster will be managed by GCP with username/password as the auth.
 
 
 ### Step 2. Deploying the Datadog Agent to the deployed cluster in GKE
