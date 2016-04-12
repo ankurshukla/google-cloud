@@ -1,0 +1,36 @@
+{% set apiVersion = "v1" if clusterVersion = "1.2" else "extensions/v1beta1" %}
+{% set clusterTypeVersion = "v1" if clusterVersion = "1.2" else "extensions-v1beta1" %}
+
+{% set CLUSTER_TYPE = env['project'] + '/' + properties['cluster'] + '-'+clusterTypeVersion %}
+{% set DAEMONSETS_COLLECTION = '/apis/'+apiVersion+'/namespaces/namespace}/daemonsets' %}
+
+- name: {{ env['deployment'] }}-{{ env['name'] }}-datadog-agent
+  type: {{ CLUSTER_TYPE }}:{{ DAEMONSETS_COLLECTION }}
+  properties:
+    namespace: default
+    apiVersion:  {{ apiVersion }}
+    kind: DaemonSet
+    metadata:
+      name: datadog-agent
+      labels:
+        app:datadog-agent
+    spec:
+      containers:
+      - image: {{ properties['dataDogImage'] }}
+        imagePullPolicy: Always
+        name: dd-agent
+        ports:
+          - containerPort: {{ properties['dataDogContainerPort'] }}
+            name: dogstatsdport
+        env:
+          - name: API_KEY
+            value: {{ properties['dataDogKey'] }}
+        volumeMounts:
+          - name: dockersocket
+            mountPath: /var/run/docker.sock
+          - name: procdir
+            mountPath: /host/proc
+            readOnly: true
+          - name: cgroups
+            mountPath: /host/sys/fs/cgroup
+            readOnly: true

@@ -1,0 +1,12 @@
+imports:
+ - path: datadog.jinja
+
+resources:
+- name: datadog
+  type: datadog.jinja
+  properties:
+    clusterName: <cluster name>
+    clusterVersion: 1.2 # or 1.1.8 or older version
+    dataDogKey: <key>
+    dataDogImage: datadog/docker-dd-agent:kubernetes
+    dataDogContainerPort: <container port>

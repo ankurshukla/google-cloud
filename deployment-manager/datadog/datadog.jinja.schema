@@ -1,0 +1,28 @@
+required:
+- clusterName
+- clusterVersion
+- dataDogKey
+- dataDogImage
+- dataDogContainerPort
+
+properties:
+  clusterName:
+    type: string
+    description: Cluster name. Requires that the type "<cluster>-extensions-v1beta1" exists.
+  clusterVersion:
+    type: string
+    enum:
+     - 1.2
+     - 1.1.8
+     default: 1.2
+     description: Version of the kubernetes API.
+  dataDogKey:
+    type: string
+    description: Datadog key.
+  dataDogImage:
+    type: string
+    description: dockerhub or gcr.io image path to Datadog agent.
+  dataDogContainerPort:
+    type: integer
+    description: container port for Datadog agent.
+    dafault: 8125
